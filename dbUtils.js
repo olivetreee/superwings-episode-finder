@@ -55,6 +55,7 @@ const getAllRelevantHeaders = () => {
 // since this is a one-time thing.
 const compileJson = () => {
     const descriptions = getAllDescriptions();
+    // TODO: need to add season number here as well...
     const headers = getAllRelevantHeaders();
     const result = [];
     let currentSeason = 1;

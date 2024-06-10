@@ -1,18 +1,26 @@
-import db from "./db.json" assert {type: 'json'};
+import db from "./db.json" with {type: 'json'};
 
-const searchByHelper = (episodes, helperName) => episodes.filter(episode => episode.description.includes(helperName))
+const buildWordANDQuery = helpers => helpers.map(helper => `(?=.*${helper})`).join();
+
+const searchByHelper = (episodes, helperNames) => {
+    const helpersRegex = new RegExp(buildWordANDQuery(helperNames));
+    return episodes.filter(episode => helpersRegex.test(episode.description))
+}
 
 const searchBySeason = (season) => season === "all"
     ? db.reduce((acc, seasonEpisodes) => acc.concat(seasonEpisodes), [])
     : db[season-1];
 
-const query = (season, helperName) => {
+const dbQuery = (season, helperName) => {
     const seasonEpisodes = searchBySeason(season);
     const foundEpisodes = searchByHelper(seasonEpisodes, helperName);
     return foundEpisodes;
 }
 
-const result = query(2, "Dizzy");
-console.log("Result is...");
-console.log(result.length);
-console.log(result);
+window.dbQuery = dbQuery;
+
+console.log("HELLO!!");
+// const result = query(2, "Dizzy");
+// console.log("Result is...");
+// console.log(result.length);
+// console.log(result);

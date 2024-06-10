@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" /> -->
+    <script type="module" src="./utils.js"></script>
 </head>
 <style>
     .main {
@@ -57,6 +56,16 @@
         border-radius: 10px;
         border: solid 3px #33333399;
     }
+
+    .episodes-table-wrapper {
+        overflow: scroll;
+        height: 40%;
+        padding: 0 20px;
+    }
+
+    #episodes-table-body td {
+        text-align: center;
+    }
 </style>
 <body>
     <div class="main">
@@ -64,14 +73,63 @@
             <img src="assets/sw-logo.png"/>
             <h1>Episode Finder</h1>
         </div>
-        <ul class="sw-selector" id="sw-selector" />
+        <ul class="sw-selector" id="sw-selector"></ul>
+        <div class="episodes-table-wrapper">
+            <table id="episodes-table" border=1>
+                <thead>
+                    <tr>
+                        <th>Season</th>
+                        <th>Episode</th>
+                        <th>Title</th>
+                        <th>Is Two-Part Episode?</th>
+                    </tr>
+                </thead>
+                <tbody id="episodes-table-body"></tbody>
+            </table>
+        </div>
     </div>
 </body>
-<script>
+<script type="module">
+    const cleanUpTable = () => {
+        document.getElementById("episodes-table-body").innerHTML = "";
+    }
+
+    const selectedSws = new Set();
+    let queryResults = [];
     const onSwClick = (swEl) => {
         const swName = swEl.attributes["data-click-id"].value;
-        console.log(swName);
+        if (selectedSws.has(swName)) {
+            selectedSws.delete(swName);
+        } else {
+            selectedSws.add(swName);
+        }
+
         swEl.parentNode.classList.toggle("selected");
+
+        cleanUpTable();
+
+        if (selectedSws.size === 0) {
+            return;
+        }
+
+        queryResults = window.dbQuery("all", Array.from(selectedSws));
+
+        queryResults.forEach(result => {
+            const rowEl = document.createElement("tr");
+            const seasonCell = document.createElement("td");
+            seasonCell.textContent = result.season
+            rowEl.appendChild(seasonCell);
+            const episodeCell = document.createElement("td");
+            episodeCell.textContent = result.episodeNumber;
+            rowEl.appendChild(episodeCell);
+            const titleCell = document.createElement("td");
+            titleCell.textContent = result.title;
+            rowEl.appendChild(titleCell);
+            const twoParthCell = document.createElement("td");
+            twoParthCell.textContent = result.isPartOfDoubleEpisode ? "✅" : "";
+            rowEl.appendChild(twoParthCell);
+            document.getElementById("episodes-table-body").appendChild(rowEl);
+        })
 
     }
 
@@ -98,7 +156,8 @@
         Swampy: "https://static.wikia.nocookie.net/super-wings/images/4/4b/Swampy.webp",
     }
 
-    const IMG_URL_SUFFIX = "revision/latest/smart/width/125/height/125";
+    // const IMG_URL_SUFFIX = "revision/latest/scale-to-width-down/125";
+    const IMG_URL_SUFFIX = "";
 
     Object.entries(SW_NAME_IMAGE).forEach(([swName, imgUrl]) => {
         const liEl = document.createElement("li");
@@ -106,6 +165,7 @@
         imgEl.src = `${imgUrl}/${IMG_URL_SUFFIX}`;
         imgEl.onclick = ev => onSwClick(ev.target);
         imgEl.setAttribute("data-click-id", swName);
+        imgEl.setAttribute("height", 125);
         liEl.appendChild(imgEl);
         liEl.append(swName);
         document.getElementById("sw-selector").appendChild(liEl);
