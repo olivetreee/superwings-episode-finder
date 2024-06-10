@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" /> -->
+</head>
+<style>
+    .main {
+        background-image: url("assets/clouds.jpg");
+        height: 100vh;
+    }
+
+    .title img {
+        width: 60%;
+    }
+
+    .title {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .title h1 {
+        margin: 0;
+    }
+
+    .sw-selector {
+        max-height: 300px;
+        display: flex;
+        /* flex-wrap: wrap; */
+        overflow-x: scroll;
+        list-style: none;
+        padding: 0;
+    }
+
+    .sw-selector li {
+        box-sizing: border-box;
+        text-align: center;
+        margin: 10px;
+        padding: 5px;
+        border: solid 3px transparent;
+    }
+
+    .sw-selector img {
+        min-width: 125px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .sw-selector .selected {
+        background-color: #33333355;
+        border-radius: 10px;
+        border: solid 3px #33333399;
+    }
+</style>
+<body>
+    <div class="main">
+        <div class="title">
+            <img src="assets/sw-logo.png"/>
+            <h1>Episode Finder</h1>
+        </div>
+        <ul class="sw-selector" id="sw-selector" />
+    </div>
+</body>
+<script>
+    const onSwClick = (swEl) => {
+        const swName = swEl.attributes["data-click-id"].value;
+        console.log(swName);
+        swEl.parentNode.classList.toggle("selected");
+
+    }
+
+    const SW_NAME_IMAGE = {
+        Astra: "https://static.wikia.nocookie.net/super-wings/images/3/32/Astra_Galaxy_Wings.png",
+        Astro: "https://static.wikia.nocookie.net/super-wings/images/7/7f/Astro_Galaxy_Wings.png",
+        Bello: "https://static.wikia.nocookie.net/super-wings/images/1/1a/Bello4.png",
+        Blizz: "https://static.wikia.nocookie.net/super-wings/images/e/e6/Blizz.png",
+        Chase: "https://static.wikia.nocookie.net/super-wings/images/b/b4/Chace.png",
+        Dizzy: "https://static.wikia.nocookie.net/super-wings/images/d/db/Dizzy_Rescue_Riders.png",
+        Donnie: "https://static.wikia.nocookie.net/super-wings/images/1/10/Donnie_Build-It_Buddies%282%29.png",
+        Flip: "https://static.wikia.nocookie.net/super-wings/images/2/24/Character-flip.png",
+        "Grand Albert": "https://static.wikia.nocookie.net/super-wings/images/6/67/Super-wings-albert-01.png",
+        Jerome: "https://static.wikia.nocookie.net/super-wings/images/3/3c/Imgres.jpg",
+        Jett: "https://static.wikia.nocookie.net/super-wings/images/4/44/Imgres-0.jpg",
+        Leo: "https://static.wikia.nocookie.net/super-wings/images/8/8c/Leo.jpg",
+        Mira: "https://static.wikia.nocookie.net/super-wings/images/2/27/Mira_Wild_Team.png",
+        Neo: "https://static.wikia.nocookie.net/super-wings/images/7/77/Joe.png",
+        Paul: "https://static.wikia.nocookie.net/super-wings/images/8/83/Paul_Police_Patrol.png",
+        "Moon Rover": "https://static.wikia.nocookie.net/super-wings/images/1/1a/Rover_Super_Wings.png",
+        Sunny: "https://static.wikia.nocookie.net/super-wings/images/a/a0/Sunny.jpg",
+        Swampy: "https://static.wikia.nocookie.net/super-wings/images/4/4b/Swampy.webp",
+        Todd: "https://static.wikia.nocookie.net/super-wings/images/c/ca/Character-todd.png",
+        Swampy: "https://static.wikia.nocookie.net/super-wings/images/4/4b/Swampy.webp",
+    }
+
+    const IMG_URL_SUFFIX = "revision/latest/smart/width/125/height/125";
+
+    Object.entries(SW_NAME_IMAGE).forEach(([swName, imgUrl]) => {
+        const liEl = document.createElement("li");
+        const imgEl = document.createElement("img");
+        imgEl.src = `${imgUrl}/${IMG_URL_SUFFIX}`;
+        imgEl.onclick = ev => onSwClick(ev.target);
+        imgEl.setAttribute("data-click-id", swName);
+        liEl.appendChild(imgEl);
+        liEl.append(swName);
+        document.getElementById("sw-selector").appendChild(liEl);
+    })
+</script>
+</html>
