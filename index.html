@@ -136,24 +136,33 @@
     const SW_NAME_IMAGE = {
         Astra: "https://static.wikia.nocookie.net/super-wings/images/3/32/Astra_Galaxy_Wings.png",
         Astro: "https://static.wikia.nocookie.net/super-wings/images/7/7f/Astro_Galaxy_Wings.png",
+        Badge: "https://images6.fanpop.com/image/photos/43400000/Badge-super-wings-43438206-700-700.png",
         Bello: "https://static.wikia.nocookie.net/super-wings/images/1/1a/Bello4.png",
         Blizz: "https://static.wikia.nocookie.net/super-wings/images/e/e6/Blizz.png",
+        Bucky: "https://static.wikia.nocookie.net/super-wings/images/e/eb/Bucky.png",
         Chase: "https://static.wikia.nocookie.net/super-wings/images/b/b4/Chace.png",
+        Crystal: "https://static.wikia.nocookie.net/super-wings/images/3/31/Crystal.png",
         Dizzy: "https://static.wikia.nocookie.net/super-wings/images/d/db/Dizzy_Rescue_Riders.png",
         Donnie: "https://static.wikia.nocookie.net/super-wings/images/1/10/Donnie_Build-It_Buddies%282%29.png",
+        Ellie: "https://kutubukukartun.com/wp-content/uploads/2023/03/Capture_2023_03_08_07_02_56_368.png",
         Flip: "https://static.wikia.nocookie.net/super-wings/images/2/24/Character-flip.png",
+        "Golden Boy": "https://static.wikia.nocookie.net/super-wings/images/2/20/Golden_Boy.jpg",
         "Grand Albert": "https://static.wikia.nocookie.net/super-wings/images/6/67/Super-wings-albert-01.png",
         Jerome: "https://static.wikia.nocookie.net/super-wings/images/3/3c/Imgres.jpg",
-        Jett: "https://static.wikia.nocookie.net/super-wings/images/4/44/Imgres-0.jpg",
         Leo: "https://static.wikia.nocookie.net/super-wings/images/8/8c/Leo.jpg",
+        Lime: "https://ilovecharacter.com/news/data/20220202/p1065611708611665_213_thum.jpg",
         Mira: "https://static.wikia.nocookie.net/super-wings/images/2/27/Mira_Wild_Team.png",
+        "Moon Rover": "https://static.wikia.nocookie.net/super-wings/images/1/1a/Rover_Super_Wings.png",
         Neo: "https://static.wikia.nocookie.net/super-wings/images/7/77/Joe.png",
         Paul: "https://static.wikia.nocookie.net/super-wings/images/8/83/Paul_Police_Patrol.png",
-        "Moon Rover": "https://static.wikia.nocookie.net/super-wings/images/1/1a/Rover_Super_Wings.png",
+        Remi: "https://images6.fanpop.com/image/photos/43400000/Remi-super-wings-43438213-300-300.png",
+        Scoop: "https://static.wikia.nocookie.net/super-wings/images/2/26/Scoop_Build-It_Buddies.png",
+        Sparky: "https://images6.fanpop.com/image/photos/43400000/Sparky-super-wings-43438214-700-700.png",
         Sunny: "https://static.wikia.nocookie.net/super-wings/images/a/a0/Sunny.jpg",
         Swampy: "https://static.wikia.nocookie.net/super-wings/images/4/4b/Swampy.webp",
+        Tino: "https://ilovecharacter.com/news/data/20220202/p1065611708611665_861_thum.jpg",
         Todd: "https://static.wikia.nocookie.net/super-wings/images/c/ca/Character-todd.png",
-        Swampy: "https://static.wikia.nocookie.net/super-wings/images/4/4b/Swampy.webp",
+        Zoey: "https://static.wikia.nocookie.net/super-wings/images/5/52/Hello_Zoey.jpg",
     }
 
     // const IMG_URL_SUFFIX = "revision/latest/scale-to-width-down/125";
@@ -162,7 +171,8 @@
     Object.entries(SW_NAME_IMAGE).forEach(([swName, imgUrl]) => {
         const liEl = document.createElement("li");
         const imgEl = document.createElement("img");
-        imgEl.src = `${imgUrl}/${IMG_URL_SUFFIX}`;
+        // imgEl.src = `${imgUrl}/${IMG_URL_SUFFIX}`;
+        imgEl.src = imgUrl;
         imgEl.onclick = ev => onSwClick(ev.target);
         imgEl.setAttribute("data-click-id", swName);
         imgEl.setAttribute("height", 125);
